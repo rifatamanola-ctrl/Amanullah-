@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SECURITY_SCANNER_v1</title>
+    <style>
+        body { background-color: #000; color: #0f0; font-family: 'Courier New', monospace; padding: 20px; }
+        .container { border: 1px solid #0f0; padding: 20px; max-width: 600px; margin: auto; }
+        input { width: 95%; padding: 10px; background: #111; color: #0f0; border: 1px solid #0f0; margin-bottom: 10px; }
+        button { background: #0f0; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; }
+        #output { margin-top: 20px; word-break: break-all; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>[ SCANNER_INITIALIZED ]</h1>
+    <input type="text" id="target" placeholder="INPUT_TARGET_URL_OR_ID">
+    <button onclick="runScan()">EXECUTE_SCAN</button>
+    <div id="output"></div>
+</div>
+<script>
+    function runScan() {
+        const target = document.getElementById("target").value.toLowerCase();
+        const output = document.getElementById("output");
+        if (!target) { output.innerHTML = "ERROR: NO_INPUT_DETECTED"; return; }
+        const maliciousIndicators = ["phishing", "login-steal", "malware", "scam"];
+        let isMalicious = maliciousIndicators.some(indicator => target.includes(indicator));
+        if (isMalicious) {
+            output.innerHTML = "STATUS: ALERT_DETECTED_MALICIOUS_PATTERN_IN_TARGET";
+        } else {
+            output.innerHTML = "STATUS: NO_THREATS_DETECTED_IN_LOCAL_SCAN";
+        }
+    }
+</script>
+</body>
+</html>
