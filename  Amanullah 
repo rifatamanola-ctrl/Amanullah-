@@ -1,32 +1,40 @@
-const SecurityScanner = {
-    checkInput: function(input) {
-        return input.length > 0;
-    },
-
-    checkStrength: function(password) {
-        return password.length >= 8;
-    },
-
-    compareIDs: function(id1, id2) {
-        return id1 === id2;
-    },
-
-    runAllChecks: function(data) {
-        const results = {
-            inputSafe: this.checkInput(data.input),
-            isStrong: this.checkStrength(data.password),
-            isMatch: this.compareIDs(data.id1, data.id2)
-        };
-        return results;
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SECURITY_SCANNER_v1</title>
+    <style>
+        body { background: #0a0a0a; color: #00ff00; font-family: 'Courier New', monospace; padding: 20px; }
+        .container { border: 2px solid #00ff00; padding: 25px; max-width: 600px; margin: auto; border-radius: 10px; }
+        input { width: 95%; padding: 12px; background: #111; color: #00ff00; border: 1px solid #00ff00; margin-bottom: 15px; }
+        button { background: #00ff00; color: #000; border: none; padding: 12px 20px; cursor: pointer; font-weight: bold; width: 100%; }
+        #output { margin-top: 20px; padding: 15px; border: 1px dashed #00ff00; min-height: 50px; word-break: break-all; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>[ CYBER_SECURITY_SCANNER ]</h1>
+    <input type="text" id="target" placeholder="ENTER_URL_OR_DATA_TO_SCAN">
+    <button onclick="runScan()">EXECUTE_SCAN</button>
+    <div id="output">SYSTEM_READY...</div>
+</div>
+<script>
+    function runScan() {
+        const input = document.getElementById("target").value.toLowerCase();
+        const output = document.getElementById("output");
+        if (!input) { output.innerHTML = "ERROR: NO_INPUT_DETECTED"; return; }
+        
+        let report = [];
+        const threats = ["phishing", "login-steal", "malware", "scam", "hack", "virus"];
+        
+        if (input.length < 8) report.push("WEAK_INPUT_STRENGTH");
+        threats.forEach(t => { if (input.includes(t)) report.push("THREAT_DETECTED: " + t.toUpperCase()); });
+        
+        if (report.length === 0) {
+            output.innerHTML = "STATUS: NO_THREATS_DETECTED_IN_LOCAL_SCAN";
+        } else {
+            output.innerHTML = "ALERT:<br>" + report.join("<br>");
+        }
     }
-};
-
-const userData = { 
-    input: "sample_data", 
-    password: "securePassword123", 
-    id1: "A123", 
-    id2: "A123" 
-};
-
-const report = SecurityScanner.runAllChecks(userData);
-console.log(report);
+</script>
+</body>
+</html>
