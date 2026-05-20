@@ -1,0 +1,32 @@
+const SecurityScanner = {
+    checkInput: function(input) {
+        return input.length > 0;
+    },
+
+    checkStrength: function(password) {
+        return password.length >= 8;
+    },
+
+    compareIDs: function(id1, id2) {
+        return id1 === id2;
+    },
+
+    runAllChecks: function(data) {
+        const results = {
+            inputSafe: this.checkInput(data.input),
+            isStrong: this.checkStrength(data.password),
+            isMatch: this.compareIDs(data.id1, data.id2)
+        };
+        return results;
+    }
+};
+
+const userData = { 
+    input: "sample_data", 
+    password: "securePassword123", 
+    id1: "A123", 
+    id2: "A123" 
+};
+
+const report = SecurityScanner.runAllChecks(userData);
+console.log(report);
